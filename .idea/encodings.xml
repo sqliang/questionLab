@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/js/app/perCenterApp.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/js/controller/indexCtrl.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/js/filter/indexFilter.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/js/route/indexRoute.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/js/service/indexService.js" charset="UTF-8" />
   </component>
 </project>
