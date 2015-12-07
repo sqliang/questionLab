@@ -25,3 +25,14 @@ indexApp.filter("qtypestr", function () {
         }
     }
 })
+    .filter("optionstr", function () {
+        return function (index) {
+            return String.fromCharCode(index + 65);
+        }
+    })
+    .filter("blockfilter", function () {
+        return function (cont) {
+            cont = cont || '';
+            return cont.replace(/\$\$/g, '______');
+        }
+    })

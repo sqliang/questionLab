@@ -26,7 +26,6 @@ indexApp.controller("questionListCtrl", function ($scope) {
             var q = $scope.questionList;
             if(q.id = id){
                 $scope.questionList.splice(i,1);
-                questionList.splice(i,1);
                 break;
             }
         }
@@ -34,10 +33,11 @@ indexApp.controller("questionListCtrl", function ($scope) {
 });
 
 indexApp.controller("questionCtrl", function ($scope,$rootScope,$location,$filter) {
-    var id = $rootScope.$state.params.id,
+    //1,get the params id and type
+    var id = parseInt($rootScope.$state.params.id),
         type = $rootScope.$state.current.name.split(".")[1];//获取题型的名称
-    console.log(type);
-
+    //2,定义函数
+    //初始化formData数据函数
     var initData = function (type) {
        switch (type){
            case 'choice':
@@ -71,16 +71,17 @@ indexApp.controller("questionCtrl", function ($scope,$rootScope,$location,$filte
             });
         }
     };
+
     var getDataById = function (id) {
         var queObj = {};
-        for(var question in questionList){
-            if(question.id === id){
-                queObj = question;
+        for(var index in questionList){
+            if(questionList[index]["id"] == id){
+                queObj = questionList[index];
                 break;
             }
         }
         return queObj;
-    }
+    };
 
     if(id !== 0){
         var data = getDataById(id);
@@ -116,6 +117,29 @@ indexApp.controller("questionCtrl", function ($scope,$rootScope,$location,$filte
         var type = $filter('qtypestr_en')($scope.formData.qtype);
         $rootScope.$state.go('questionEdit.'+type,{type:type});//修改
     }
-
-
+    //提交
+    $scope.submit = function () {
+        if(id == 0){
+            var id = questionList.length + 1,
+                qtype = (type == "choice") ? 1 : 2,
+                name = $scope.formData.name;
+            var question = {
+                id : id,
+                qtype : qtype,
+                name : name
+            };
+            questionList.push(question);
+        }else{
+            var qtype = (type == "choice") ? 1 : 2,
+                name = $scope.formData.name;
+            for(var index in questionList){
+                if(questionList[index]["id"] == id){
+                    questionList[index]["qtype"] = qtype;
+                    questionList[index]["name"] = name;
+                    break;
+                }
+            }
+        }
+        location.href="#/questionList";
+    }
 });
